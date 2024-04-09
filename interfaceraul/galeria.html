@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #007BFF;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .gallery img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            margin: 10px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+        .add-image-btn {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .add-image-btn:hover {
+            background-color: #0056B3;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Galeria</h1>
+        <p>Clique no botão abaixo para adicionar uma imagem à galeria:</p>
+        <input type="file" id="image-input" accept="image/*" style="display: none;">
+        <label for="image-input" class="add-image-btn">Adicionar Imagem</label>
+        <div class="gallery"></div>
+    </div>
+    <script>
+        const imageInput = document.getElementById('image-input');
+        const gallery = document.querySelector('.gallery');
+        imageInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = document.createElement('img');
+                img.src = event.target.result;
+                img.alt = 'Imagem adicionada';
+                gallery.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
