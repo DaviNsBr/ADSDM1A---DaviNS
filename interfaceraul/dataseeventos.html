@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Eventos</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            background-color: #327ef0;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #285f9d;
+        }
+
+        button:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cadastro de Eventos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome do Evento</th>
+                <th>Data</th>
+                <th>Horário</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="eventsTableBody">
+            <!-- Os eventos serão armazenados aqui -->
+        </tbody>
+    </table>
+    <h2>Cadastro de novo evento</h2>
+    <form id="eventForm">
+        <label for="eventName">Nome do Evento:</label>
+        <input type="text" id="eventName" name="eventName" required>
+        <br>
+        <label for="eventDate">Data:</label>
+        <input type="date" id="eventDate" name="eventDate" required>
+        <br>
+        <label for="eventTime">Horário:</label>
+        <input type="time" id="eventTime" name="eventTime" required>
+        <br>
+        <label for="eventDescription">Descrição:</label>
+        <textarea id="eventDescription" name="eventDescription" required></textarea>
+        <br>
+        <button type="submit">Cadastrar Evento</button>
+    </form>
+    <script>
+        let events = [];
+        const eventsTableBody = document.getElementById('eventsTableBody');
+        const eventForm = document.getElementById('eventForm');
+
+        eventForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const eventName = document.getElementById('eventName').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const eventTime = document.getElementById('eventTime').value;
+            const eventDescription = document.getElementById('eventDescription').value;
+
+            const newEvent = {
+                name: eventName,
+                date: eventDate,
+                time: eventTime,
+                description: eventDescription
+            };
+
+            events.push(newEvent);
+
+            const newRow = document.createElement('tr');
+
+            const newNameCell = document.createElement('td');
+            newNameCell.textContent = eventName;
+
+            const newDateCell = document.createElement('td');
+            newDateCell.textContent = eventDate;
+
+            const newTimeCell = document.createElement('td');
+            newTimeCell.textContent = eventTime;
+
+            const newDescriptionCell = document.createElement('td');
+            newDescriptionCell.textContent = eventDescription;
+
+            const newActionsCell = document.createElement('td');
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Excluir';
+            deleteButton.addEventListener('click', function () {
+                const index = events.indexOf(newEvent);
+                events.splice(index, 1);
+                eventsTableBody.removeChild(newRow);
+            });
+            newActionsCell.appendChild(deleteButton);
+
+            newRow.appendChild(newNameCell);
+            newRow.appendChild(newDateCell);
+            newRow.appendChild(newTimeCell);
+            newRow.appendChild(newDescriptionCell);
+            newRow.appendChild(newActionsCell);
+
+            eventsTableBody.appendChild(newRow);
+        });
+    </script>
+</body>
+</html>
